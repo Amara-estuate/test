@@ -1,0 +1,1566 @@
+SQL Training:
+================
+Structured Query Language (SQL) is the set of statements with which all programs 
+and users access data in an Oracle database
+
+SQL commands are instructions. It is used to communicate with the database. 
+It is also used to perform specific tasks, functions, and queries of data.
+
+SQL can perform various tasks like create a table, add data to tables, drop the table, modify the table, set permission for users.
+
+
+
+DDL:
+=====
+DDL changes the structure of the table like creating a table, deleting a table, altering a table, etc.
+
+All the command of DDL are auto-committed that means it permanently save all the changes in the database.
+
+
+
+1.Create --It is used to create a new table in the database.
+
+Syntax: CREATE TABLE TABLE_NAME (COLUMN_NAME DATATYPES[,....]);  
+Eg:     CREATE TABLE EMPLOYEE(Name VARCHAR2(20), Email VARCHAR2(100), DOB DATE);  
+
+
+2.Alter   /*It is used to alter the structure of the database. This change could be either to 
+            modify the characteristics of an existing attribute or probably to add a new attribute.*/
+
+Syntax: To add a new column in the table
+        ALTER TABLE table_name ADD column_name COLUMN-definition;    
+		
+ Eg:    ALTER TABLE STU_DETAILS ADD(ADDRESS VARCHAR2(20));  		
+
+Syntax: To modify existing column in the table:
+		ALTER TABLE MODIFY(COLUMN DEFINITION....);  
+		
+ Eg:    ALTER TABLE STU_DETAILS MODIFY (NAME VARCHAR2(20));  
+
+
+
+3.Drop  --It is used to delete both the structure and record stored in the table.
+
+Syntax: DROP TABLE table_name;
+Eg:     DROP TABLE EMPLOYEE;  
+
+4.Rename  --Sometimes we may want to rename our table to give it a more relevant name. For this purpose we can use ALTER TABLE to rename the name of table.
+
+Syntax: ALTER TABLE table_name
+        RENAME TO new_table_name;
+		
+		ALTER TABLE table_name
+        RENAME COLUMN old_name TO new_name;
+		
+
+5.Truncate  -- It is used to delete all the rows from the table and free the space containing the table.
+
+   Syntax: TRUNCATE TABLE table_name;  
+   Eg:     TRUNCATE TABLE EMPLOYEE;  
+
+
+DQL:
+======
+
+DQL is used to fetch the data from the database.
+
+It uses only one command:
+
+SELECT
+
+Syntax:  SELECT expressions    
+         FROM TABLES    
+         WHERE conditions;
+		 
+Eg:      SELECT emp_name  
+         FROM employee  
+         WHERE age > 20;  
+
+DML:
+=======
+DML commands are used to modify the database. 
+It is responsible for all form of changes in the database.
+The command of DML is not auto-committed that means it cant permanently save all the changes in the database. 
+They can be rollback.
+
+
+1.Insert --The INSERT statement is a SQL query. It is used to insert data into the row of a table.
+  Syntax: INSERT INTO TABLE_NAME (col1, col2, col3,.... col N)  
+                      VALUES (value1, value2, value3, .... valueN);  
+					  
+  Eg:     INSERT INTO javatpoint (Author, Subject) VALUES ("Sonoo", "DBMS");  
+
+2.Update --This command is used to update or modify the value of a column in the table.
+
+  Syntax:   UPDATE table_name SET [column_name1= value1,...column_nameN = valueN] 
+           [WHERE CONDITION] ;
+  Eg:      UPDATE students SET User_Name = 'Sonoo'    
+           WHERE Student_Id = '3' ;
+
+3. Delete  --It is used to remove one or more row from a table.
+
+   Syntax: DELETE FROM table_name [WHERE condition];  
+   Eg:     DELETE FROM javatpoint  WHERE Author="Sonoo";  
+
+
+
+DCL:
+========
+
+* DCL commands are used to grant and take back authority from any database user.
+
+Grant --It is used to give user access privileges to a database.
+
+Eg: GRANT SELECT, UPDATE ON MY_TABLE TO SOME_USER, ANOTHER_USER; 
+
+Revoke --It is used to take back permissions from the user.
+
+ Eg: REVOKE SELECT, UPDATE ON MY_TABLE FROM USER1, USER2;  
+
+
+
+TCL:
+=========
+TCL commands can only use with DML commands like INSERT, DELETE and UPDATE only.
+
+Commit --Commit command is used to save all the transactions to the database.
+Eg: DELETE FROM CUSTOMERS  
+    WHERE AGE = 25;  
+    COMMIT;  
+
+Rollback --Rollback command is used to undo transactions that have not already been saved to the database.
+
+Eg: ROLLBACK;  
+
+
+
+
+Oracle Built-in Data Types:
+=============================
+
+1. VARCHAR2(size [BYTE | CHAR])   --Variable-length character string
+    Size --From 1 byte to 4KB.
+
+2. NVARCHAR2(size)  --  Variable-length Unicode character string having maximum length size characters.
+    Size: /*Maximum size is determined by the national character set definition, with an upper limit of 4000 bytes. 
+            You must specify size for NVARCHAR2.*/
+
+3. NUMBER [ (p [, s]) ]  --Range of p : From 1 to 38.
+                         --Ranges of s : From -84 to 127.
+   Size: --A NUMBER value requires from 1 to 22 bytes.
+
+4.DATE  : --	Valid date range   --The size is fixed at 7 bytes.
+
+5. TIMESTAMP : --This data type contains the datetime fields YEAR, MONTH, DAY, HOUR, MINUTE, and SECOND
+
+
+
+
+Varchar can identify NULL and empty string separately.	1) Varchar2 cannot identify both separately. Both considered as same for this.
+2) Varchar can store minimum 1 and maximum 2000 bytes of character data.	2) Varchar2 can store minimum 1 and maximum 4000 bytes of character data.
+3) Allocate fixed size of data irrespective of the input.
+Ex: We defined varchar (15) and entered only 10 characters. But it allocates space for entire 15 characters.
+
+3) Allocate variable size of data based on input.
+Ex: We defined varchar2 (15) and entered only 10 characters. Then varchar2 will allocate space for 10 characters only but not for 15.
+
+
+Aggregate Functions:
+====================
+1.Max
+2.Min
+3.Count
+4.Avg
+5.Sum
+
+--Find max sal of emp
+
+Select Max(Salary) 
+From Employee;
+
+
+--Find Min sal of emp
+
+Select Min(Salary) 
+From Employee;
+
+--Find total no of rows
+--Returns the number of rows in the query. If you specify expr then count ignore nulls. 
+--If you specify the asterisk (*), this function returns all rows, including duplicates and nulls. 
+--COUNT never returns null.
+
+
+Select Count(*)
+From Employee;  --6
+
+Select Count(Salary)  --won't count NULL value
+From Employee;
+
+Select DISTINCT Salary
+From Employee;
+
+Select count(DISTINCT(Salary))
+From Employee;
+
+--Find SUM sal
+
+Select SUM(Salary)
+From Employee;
+
+
+--DISTINCT
+Oracle DISTINCT clause is used to remove the duplicate records from the result set.
+ It is only used with SELECT statement.
+ 
+--To sum only unique salaries
+Select SUM(DISTINCT(Salary))
+From Employee;
+
+
+--Find Avg of Sal  
+-- avgsal means Sum of total sal / Count of Sal
+
+Select Avg(Salary)
+From Employee;
+
+
+
+SubQueries:
+=============
+A subquery is a SQL query within a query.
+Subqueries are nested queries that provide data to the enclosing query.
+Subqueries can return individual values or a list of records
+Subqueries must be enclosed with parenthesis
+
+--query to display emp name with Max sal:
+
+Here we will  use nested query
+
+--Inner query will be executed first and the result will be passed to the Outer query:
+Select Emp_Name, Salary
+From Employee 
+Where Salary =(
+Select Max(Salary) 
+From Employee);
+
+--Select 2nd Highest sal and employee names who has those salaries
+Select *
+From Employee
+Where Salary =
+(
+Select MAX(Salary)
+From Employee Where Salary <>
+(Select max(Salary)
+From employee)
+);
+
+-- = operator is used wen we r comparing with one value
+-- In operator will be used wen we r comparing with mulitple values
+
+GROUP BY
+========
+The GROUP BY clause is a SQL command that is used to group rows that have the same values. 
+The GROUP BY clause is used in the SELECT statement . 
+Optionally it is used in conjunction with aggregate functions to produce summary reports from the database
+
+--Find No of employees working in Dept
+Here we will be using Group By clause
+--the attribute which we r using with the Group BY caluse tat attribute only we need to use  in Select .
+
+Select  DEPT,count(DEPT)
+From Employee
+Group By DEPT;  
+
+
+Having :
+===========
+--The HAVING clause filters the data on the group row but not on the individual row. 
+--To view the present condition formed by the GROUP BY clause, the HAVING clause is used.
+
+--Display all DEPT names where Employees are < 2
+
+--Here we cannot use Where clause becz it will work for entire table and it will indepedently work without Group By
+--So here we will use HAVING clause with GROUP BY to provide a condition it acts lika a WHERE inside GROUP BY
+
+Select  DEPT,count(DEPT)
+From Employee
+Group By DEPT
+HAVING count(DEPT) < 2;  
+
+
+ORDER BY:
+=============
+TO Order the rows in asc and desc order , Default it is ASC
+
+Select  DEPT,count(DEPT)
+From Employee
+Group By DEPT
+HAVING count(DEPT) < 2
+Order BY DEPT DESC;  
+
+
+
+Operators:
+===========
+
+IN/NOT IN:
+------------
+--SQL IN and NOT IN operators used to specify multiple values in a WHERE clause.
+--and to use in place of multiple OR condition.
+
+
+select * from Employee
+Where DEPT IN('HR','MRKT');
+
+select * from Employee
+Where DEPT NOT IN('HR','MRKT');
+
+
+LIKE:
+-----
+LIKE operator is used with WHERE clause to matches specific pattern in a column. 
+SQL LIKE condition apply on table column data.
+
+Following two wildcards are often used with the LIKE operator
+
+% - Represents zero, or any number of characters
+_ - Represents a single character
+
+
+%
+(Percentage sign)	Percentage sign matches any number of characters (0 or more characters).
+Example. 'Op%', '%Kole', 'Opal%'
+_
+(underscore sign)	Underscore sign matches any exactly single character with in string.
+Example. 'Op_l Kole', '_pal Kole', 'Opal Kol_'
+
+Eg: 
+select * from Employee
+Where EMP_NAME LIKE 'V%';
+
+select * from Employee
+Where EMP_NAME LIKE '_h%';
+
+
+BETWEEN and TO_DATE:
+========================
+--SQL BETWEEN operator used for fetching within range data.
+-- SQL BETWEEN query simply a shorthand way of expressing an inclusive range comparison.
+
+--SQL Between operator support only range type value like number, dates, character. 
+--But not supporting boolean, string value range.
+
+ALTER TABLE Employee ADD DOB DATE;
+
+
+INSERT INTO Employee VALUES(6, 'Jack','TRAINING',15000,TO_DATE('20-FEB-1981', 'DD-MON-YYYY'));
+INSERT INTO Employee VALUES(7, 'Jane','HR',23000,TO_DATE('02-JAN-1982', 'DD-MON-YYYY'));
+INSERT INTO Employee VALUES(8, 'Mary','IT',44000,TO_DATE('20-DEC-1984', 'DD-MON-YYYY'));
+INSERT INTO Employee VALUES(9, 'Black','IT',11000,TO_DATE('22-MAR-1985', 'DD-MON-YYYY'));
+INSERT INTO Employee VALUES(10, 'Jackson','MRKT',25000,TO_DATE('21-JUN-1986', 'DD-MON-YYYY'));
+/
+
+BETWEEEN :
+=============
+
+SELECT * FROM Employee WHERE DOB BETWEEN '20-JAN-81' AND '30-DEC-84';
+
+
+SELECT * FROM Employee WHERE DOB NOT BETWEEN '20-JAN-81' AND '30-DEC-84';
+
+
+TO_DATE()
+========
+In Oracle, TO_DATE function converts a string value to DATE data type value using the specified format.
+
+function is used to convert the given data into the provided data format data type
+
+select TO_DATE('07282017', 'MMDDYY') as today from dual
+select TO_DATE('07/28/2017', 'MM/DD/YYYY') as today from dual
+
+
+TO_CHAR()
+==========
+--function is used to convert the given data into character....
+
+Eg : SELECT TO_CHAR(SYSDATE, 'dd/mm/yyyy') as Today FROM dual;
+
+SELECT TO_CHAR(DOB, 'dd-mon-yy') as Today FROM Employee;
+
+
+DUAL:
+=====
+The DUAL is special one row, one column table present by default in all Oracle databases
+
+It is suitable for use in selecting a pseudo column such as SYSDATE or USER.
+
+select SYSDATE from dual;
+
+DESC DUAL;
+
+Select USER From Dual;
+
+
+
+
+Oracle date format:
+========================
+--The standard date format for input and output is DD-MON-YY e.g., 01-JAN-17 which is controlled by the value of the NLS_DATE_FORMAT parameter.
+--The following statement shows the current value of the NLS_DATE_FORMAT parameter:
+
+SELECT
+  value
+FROM
+  V$NLS_PARAMETERS
+WHERE
+  parameter = 'NLS_DATE_FORMAT';
+
+
+In our Oracle Database system, the value of NLS_DATE_FORMAT is:
+
+--DD-MON-RR
+The following statement returns the current date with the standard date format by using the SYSDATE function.
+
+SELECT
+  sysdate
+FROM
+  dual;
+  
+--Suppose, you want to change the standard date format to YYY-MM-DD, you use the ALTER SESSION statement to change the 
+--value of the NLS_DATE_FORMAT parameter as follows:
+
+ALTER SESSION SET NLS_DATE_FORMAT = 'YYYY-MM-DD';
+  
+
+What is YY and RR in date format:
+=======================================
+/*
+YY allows you to retrieve just two digits of a year, 
+for example, the 99 in 1999. 
+The other digits (19) are automatically assigned to the current century. 
+
+RR converts two-digit years into four-digit years by rounding.
+
+50-99 are stored as 1950-1999, and dates ending in 00-49 are stored as 2000-2049. 
+*/
+
+
+
+TO_DATE()
+========
+In Oracle, TO_DATE function converts a string value to DATE data type value using the specified format.
+
+function is used to convert the given data into the provided data format data type
+
+ select TO_DATE('07282017', 'MMDDYY') as today from dual
+Aselect TO_DATE('07/28/2017', 'MM/DD/YYYY') as today from dual
+
+
+TO_CHAR()
+==========
+--function is used to convert the given data into character....
+
+Eg : SELECT TO_CHAR(SYSDATE, 'dd/mm/yyyy') as Today FROM dual;
+
+SELECT TO_CHAR(DOB, 'dd-mon-yy') as Today FROM Employee;
+
+
+DUAL:
+=====
+The DUAL is special one row, one column table present by default in all Oracle databases
+
+It is suitable for use in selecting a pseudo column such as SYSDATE or USER.
+
+select SYSDATE from dual;
+
+DESC DUAL;
+
+Select USER From Dual;
+  
+Oracle date format:
+========================
+--The standard date format for input and output is DD-MON-YY e.g., 01-JAN-17 which is controlled by the value of the NLS_DATE_FORMAT parameter.
+--The following statement shows the current value of the NLS_DATE_FORMAT parameter:
+
+SELECT
+  value
+FROM
+  V$NLS_PARAMETERS
+WHERE
+  parameter = 'NLS_DATE_FORMAT';
+
+
+In our Oracle Database system, the value of NLS_DATE_FORMAT is:
+
+--DD-MON-RR
+The following statement returns the current date with the standard date format by using the SYSDATE function.
+
+SELECT
+  sysdate
+FROM
+  dual;
+  
+--Suppose, you want to change the standard date format to YYY-MM-DD, you use the ALTER SESSION statement to change the 
+--value of the NLS_DATE_FORMAT parameter as follows:
+
+ALTER SESSION SET NLS_DATE_FORMAT = 'YYYY-MM-DD';
+  
+
+What is YY and RR in date format:
+=======================================
+/*
+YY allows you to retrieve just two digits of a year, 
+for example, the 99 in 1999. 
+The other digits (19) are automatically assigned to the current century. 
+
+RR converts two-digit years into four-digit years by rounding.
+
+50-99 are stored as 1950-1999, and dates ending in 00-49 are stored as 2000-2049. 
+*/
+
+
+
+DATE Functions:
+===============
+
+1. TO_DATE(Non-Oracle date value, Format) --Take a non-oracle date value that date value is converted into Oracle Date Format and it will display
+
+select TO_DATE('07282017', 'MMDDYY') as today from dual  --non oracle date format is considered as char value in oracle
+
+
+2. ADD_MONTHS(date,n) -- this func adding  n number of months to the given date.
+
+   Select ADD_MONTHS(SYSDATE,6) From dual;
+   
+   eg:   Update Product
+         Set Expiry_date = ADD_MONTHS(Mfg,24);
+		 
+3. MONTHS_BETWEEN(d1,d2) --This func will accept two date values and it will find out no of months between two dates.
+                         -- If the first date is old date and second date is New Date we will get Negaive value (Least value - HighestValue)
+
+eg:    --To display emp experiance in Years
+      -- From the Hire join date until the till date 
+	  -- No of Years completed by Each Emp in the Comp  for 3.5 years it will display only 3 bec of Trunc
+
+    Select TRUNC(MONTHS_BETWEEN(SYSDATE,Hiredate))/12      --
+	From Emp;
+	
+	
+4. Last_day(date)  --it will diplay last day date value in a month
+   eg:
+   Select Last_Day ('22-oct-15')
+    From Dual;   --  31-oct-15
+ 
+ 
+5. Next_Day(date,'dayname') --it will look into date and day name. i need to see Sat date value 
+
+  --for eg an emp joined in a comp if u want to see the first Monday Date after his joining
+  
+     Select Next_Day(Hire_date,'Monday')
+  From Emp;
+  
+ STRING Functions:
+ =================
+ 
+ 1. ASCII(char)  --Amercian Standard Code for Info Interchange
+                 --in our keyboard some set of char keys  are there every key is having one ascii char value. To find out use this func.
+
+eg:  Select ASCII('A')
+From dual;
+
+Select ASCII('@')
+From dual; 
+ 
+2. LOWER(COL/'String') -- you can submit here a column name or our own string.
+ 
+   --Lower func convert the given string into Lower case
+ 
+ Select LOWER(ename)
+ From Emp;
+ 
+ Select LOWER('High')
+ From dual;
+ 
+ 3. UPPER(COL/'string') --Upper is the reverse of Lower . It will display given string in UpperCase.
+ 
+ Select UPPER('welcome')
+ From dual;submit a 
+ 
+ 
+ 4. LENGTH(Col/'string') --It will find out leght of the value and it will display the length
+ 
+   Select length('Welcome')
+   From Dual;
+   
+   Select Emp_Name,length(ename) "Length"
+    From Emp;
+
+
+5.INITCAP()--INTIAL CAPITAL
+            --If you  a Word the first char should be as Capital char.
+
+
+	Select INITCAP(ename)
+	From Emp;
+	
+	--What if the string has more than one word.
+	
+	Select INITCAP('welcome to training')
+	From Dual;
+	Welcome To Training  --Here each word begining cahr will be capital
+	
+	
+6.	Translate('string/col','source','target')   --it is char by char translation
+ --in the given string we are specifying a souce char here 
+ --First the func verifies the available source char is der r nt. 
+ --If it exists tat source char is replaced with Target Char.
+ 
+--Here only char by char replacemnt
+
+Select TRANSLATE('welcome','ec','AB')
+From dual;
+ 
+--Supose if source chars are two and target char is one. wat will happen.
+
+Select TRANSLATE('welcome','ec','A')
+from Dual;
+--Here for e there is a Target char but not for c . So the char c is eliminated from output.
+
+
+7. REPLACE('str'/col, 'Source', 'Target')  --String by String replacement
+
+--Here the Repalce func looking for Source str in given string
+--If the source str is exists then it is Replaced with Target string.
+
+Note: It doesnt worry abt no of chars in source and target.
+--word by word replacement
+
+Eg:
+ Select REPLACE('welcome','come','sys')
+ From Dual;
+
+
+8.CONCAT --The Oracle CONCAT() function concatenates two strings and returns the combined string.
+
+syntax:
+CONCAT(string1,string2)
+/*Noted that the Oracle CONCAT() function concatenates two strings only. If you want to concatenate more than two strings,
+ you need to apply the CONCAT() function multiple times or use the concatenation operator (||). */
+   SELECT
+    CONCAT('Happy',' coding')
+FROM
+    dual;
+--If you want to concatenate more than two strings, you need to apply the CONCAT() 
+--function multiple times as shown in the following example:
+ 
+ SELECT
+  CONCAT( CONCAT( 'Happy', ' coding' ), ' together' )
+FROM
+  dual;
+ 
+/*The first CONCAT() function concatenates two strings: 'Happy' and ' coding', and returns a result string.
+The second CONCAT() function concatenates the result string of the first CONCAT() function, which is
+ 'Happy coding', with the string ' together' that results in 'Happy coding together' */
+ 
+ --For example, to concatenate three strings: 'Happy', ' coding', and ' together', you use the concatenation operator (||) as follows:
+
+SELECT
+  'Happy' || ' coding'  || ' together'
+FROM
+  dual;
+
+eg:
+
+ SELECT
+  (first_name  || ' '  || last_name) AS FullNAME
+FROM
+  employees;
+  
+  
+8. SUBSTR('str'/col,m,n)
+
+/*substring func display the substring from given string  that 
+substring starting with mth char through n number of next characters.*/
+
+Select substr('welcome',4,4)
+From dual;
+
+--From given string it will go to the begining of the string . From begining it will go to 4th char 
+--here the 4th char is c ..from c next 4 chars i need to substr.
+
+Select substr('Oracle',3,4)
+From dual;
+
+--Note: mth position is mandatory
+--First the func goes to 12th char from begining of the string. 
+--Space is also considered as a char here
+--From 12th char it will take untill end of the line.
+Select substr('Welcome to Oracle Functions',12)  --Here we r nt specifying wat is the position n
+From Dual;  
+
+
+9 INSTR()--INSTRING
+
+INSTR('str','ch',[+1,-1],n)
+
+ch--Target Char, looking for this char.
++1 means--search from begining of string
+-1 means --search from end of the string
+n means-- search for nth position
+
+--By default it will search for the char in the begining of the string.
+Select INSTR('welcome','e')
+from dual;  --2
+--This function looking for 1st postion of e from begining of the string.
+
+--It will find out first occurence of e and the position of e. Here the postition is 2.
+
+
+Select INSTR('welcome','e',+1,2)  --here im looking for 2nd occurence from begining of the string.
+from dual; --7
+
+
+Select INSTR('welcome','e',-1,2)----here im looking for 2nd occurence from ending of the string.
+from dual;--2  --position we have to consider starting from left hand side from 1.
+
+--Postion of the chars would not change 
+--From the end of the string it is looking for 3rd occurence.
+
+Select INSTR('koushik','k',-1,3)
+from Dual; --0
+
+Select INSTR('Koushik','k',-1,2)
+from Dual; --0
+
+
+--Using Substrg and Instr in sigle query:
+Select SUBSTR( 'xyz@mandsconsulting.com',
+ instr('xyz@mandsconsulting.com','@',+1,1)
+ )
+ From dual;
+ 
+  Select SUBSTR( 'xyz@mandsconsulting.com',5)
+ from dual;
+ 
+ 
+
+
+10. TRIM('string') --TRIM func removes blank spaces before and after the string.
+
+Select TRIM('   welcome    '),UPPER('High')
+From dual;	 --Here displays welcome High  . single space is maintained due to 2 functions we r using. it is default nature.
+
+
+11.LTRIM()----LTRIM func removes blank spaces only from  the left side of the string.
+
+Select LTRIM('   welcome    '),UPPER('High')
+From dual;
+
+
+--can i remove specific char from begining of the string using TRIM
+--LEADING removes any leading character that equals the specified trim_character.
+--TRAILING removes any trailing character that equals the specified trim_character.
+--BOTH removes any leading and trailing character that equal the specified trim_character
+
+  SELECT
+  TRIM( LEADING 'A' FROM  'ABC' )
+ FROM
+  dual;
+
+SELECT
+  TRIM(LEADING  '0' FROM  '00012345' )
+FROM
+  dual;
+   
+  SELECT
+  TRIM( TRAILING 'A' FROM  'ABCA' )
+FROM
+  dual;
+  
+   SELECT
+  TRIM( BOTH 'A' FROM  'ABCA' )
+FROM
+  dual;
+  
+  
+  
+  
+ROWNUM and ROWID :
+==================
+
+   
+ROWNUM:
+========
+
+For each row returned by a query, the ROWNUM pseudo column returns a number which indicates the order
+in which a row was selected from a table.
+
+For example, the 1st row gets the number 1, 2nd gets the number 2 and so on.
+ROWNUM can be used to limit the number of rows returned by a query,
+ROWNUM is a dynamic value that is retrieved automatically with specific statement outputs
+
+SELECT * FROM employee WHERE ROWNUM <= 7;
+
+The row numbers of the records might change if order by clause is used in the query.
+
+SELECT * FROM employee WHERE ROWNUM <= 7
+Order By EMP_NAME DESC;
+
+
+ROWID:
+======
+
+
+ROWID is a pseudo column in a table which store and return row address in HEXADECIMAL
+format with database tables
+ROWID is the permanent unique identifiers for each row in the database and it consists of 18 character string with the format.
+ BBBBBBBBB.RRRR.FFFF 
+ ROWID is representative of the allocation of physical memory. and is the permanent identity or address of a row.
+
+Oracle automatically generates a unique ROWID at the time of insertion of a row.
+
+SELECT ROWID, EMP_NAME  
+   FROM employee;
+
+
+
+VIEW:
+========
+
+
+View is a database object and it contains Logical copy of the data.
+It can be used to create to veiw the frequently used data.
+
+We are creating view on the table. and we can change the column name on view.
+
+Without table we create a View  using Force View but it is not valid until u create the view or table.
+
+Let us see:
+
+View Provides security  and DB Performance
+
+: Whenever we dont want complete data from the table and we want to restrict the few columns from the table to the user. 
+
+Take the frequently using data and put it in a view. So we will take the data from view for faster accessing .
+
+Whenever if u access the table for retrieving the info ...table will hit the database engine everytime.
+But in View it hit the database engine only one time after tat it will retrieve the data from Cache Memory. Copy of data is maintaining under cache memory.
+
+Until we reschedule the cache memory the copy of data is available .
+
+
+Types of Views:
+==============
+
+1.Simple VIEW /Updatable View -- a view which is created based on single table data
+
+Syntax:
+-------
+Create View view_name AS 
+Select  From table
+Where condition
+Order BY ;
+
+Create View V_SalesMan AS
+Select Job,Sal
+From EMP
+Where Job = 'Salesman'
+Order By Sal;
+
+create or Replace view Ajemp_v AS
+Select EMPLOYEE_ID AS "EMP",FIRST_NAME AS "NAME"
+From Emp
+Order by EMPLOYEE_ID ;
+
+Update Ajemp_v
+Set First_Name = 'Steve'
+Where EMPLOYEE_ID = 100;
+
+Note: 
+--View mantains data dynamically , whenever the Data is inserted into the Base Table that records are 
+--automatically updated into View and we can update the view also with some rules and then the Base table is updated.
+
+
+2. Composite View / ReadOnly
+
+--Created on Multiple Table data.
+
+Force VIEW
+Materialized VIEW
+Inline VIEW
+
+
+
+JOINS:
+=======
+
+--Joins are used to combine data from multiple tables to form a single result set. 
+
+--The most common joins you are likely to see in code are the following.
+
+INNER JOIN
+LEFT [OUTER] JOIN
+RIGHT [OUTER] JOIN
+FULL [OUTER] JOIN
+SELF JOIN
+
+--The choice to include or exclude these Key words is up to u.
+
+INNER JOIN:
+=============
+
+--An INNER JOIN combines data from two tables where there is a match on the joining column(s) in both tables.
+
+/*Remember, the INNER keyword is optional. In the examples below, we are returning the DEPARTMENT_NAME and the EMPLOYEE_NAME for each employee. 
+The OPERATIONS department has a DEPARTMENT_ID of 40, so it is not removed by the filter condition, but there are no employees in this department,
+ so there is no match and it is not returned in the result set.*/
+
+
+SELECT d.department_name,
+       e.employee_name
+FROM   departments d
+       JOIN employees e ON d.department_id = e.department_id
+WHERE  d.department_id >= 30
+ORDER BY d.department_name;
+
+--Here is the non-ANSI equivalent of the previous statement.
+
+SELECT d.department_name,
+       e.employee_name
+FROM   departments d, employees e
+WHERE  d.department_id = e.department_id
+AND    d.department_id >= 30
+ORDER BY d.department_name;
+
+
+LEFT JOIN:
+==============
+
+--A LEFT [OUTER] JOIN returns all valid rows from the table on the left side of the JOIN keyword, 
+--along with the values from the table on the right side, or NULLs if a matching row doesn't exist.
+
+eg:
+--Using the previous example, but switching to a LEFT OUTER JOIN means we will see the OPERATIONS department, 
+--even though it has no employees.
+
+SELECT d.department_name,
+       e.employee_name     
+FROM   departments d
+       LEFT OUTER JOIN employees e ON d.department_id = e.department_id
+WHERE  d.department_id >= 30
+ORDER BY e.employee_name;
+
+
+/*Here is the non-ANSI equivalent of the previous statement. Notice the "(+)" is used to indicate
+ the side of the join condition that may be missing. For a multi-column join condition, each column 
+ must have the "(+)" present.
+ Unlike the ANSI join syntax, the non-ANSI join syntax is not affected by the order of the tables.*/
+
+SELECT d.department_name,
+       e.employee_name      
+FROM   departments d, employees e
+WHERE  d.department_id = e.department_id (+) 
+AND    d.department_id >= 30
+ORDER BY  e.employee_name;
+
+
+RIGHT JOIN:
+============
+
+/*The RIGHT [OUTER] JOIN is the opposite of the LEFT [OUTER] JOIN. It returns all valid rows from the 
+table on the right side of the JOIN keyword, along with the values from the table on the left side if a matching row exist
+Or NULL if a matching row doesnt exist.*/
+SELECT d.department_name,
+       e.employee_name     
+FROM   employees e
+       RIGHT OUTER JOIN departments d ON e.department_id = d.department_id
+WHERE  d.department_id >= 30
+ORDER BY d.department_name, e.employee_name;
+
+
+FULL JOIN:
+==============
+/*A FULL [OUTER] JOIN combines all the rows from the tables on the left and right sides of the join. 
+If there is a  match it is made it returns the rows. If any  side has no data, it is replaced by NULLs, 
+rather than excluding it.*/
+
+--To see a an example, we need to add another employee who is not in any  department.
+
+SELECT d.department_name,
+       e.employee_name     
+FROM   employees e
+       FULL OUTER JOIN departments d ON e.department_id = d.department_id
+ORDER BY e.employee_name;
+
+
+SELF JOIN:
+==============
+--A self join is a join in which a table is joined with itself.
+--To join a table itself means that each row of the table is combined with itself and with every other row of the table.
+--The table appears twice in the FROM clause and is followed by table aliases that qualify column names in the join condition.
+
+--eg: Using self join to return the name of each employee along with the name of the employee's manager in the specific dept.
+
+SELECT e1.EMPLOYEE_NAME||' works for '||e2.EMPLOYEE_NAME
+       "Employees and Their Managers"
+       FROM employees e1, employees e2
+       WHERE e1.manager_id = e2.employee_id;
+	   
+SELECT e1.EMPLOYEE_NAME||' works for '||e2.EMPLOYEE_NAME
+       "Employees and Their Managers", e1.manager_id empid,e2.manager_id manager
+       FROM employees e1, employees e2
+       WHERE e1.manager_id = e2.employee_id;
+
+
+
+Constraints in SQL:
+============================
+
+
+SQL constraints are used to specify rules for the data in a table.
+
+Constraints are used to limit the type of data that can go into a table. 
+This ensures the accuracy and reliability of the data in the table. 
+If there is any violation between the constraint and the data action, the action is aborted.
+
+Constraints can be column level or table level. 
+Column level constraints apply to a column, and table level constraints apply to the whole table.
+
+The following constraints are commonly used in SQL:
+
+NOT NULL - Ensures that a column cannot have a NULL value
+UNIQUE - Ensures that all values in a column are different
+PRIMARY KEY - A combination of a NOT NULL and UNIQUE. Uniquely identifies each row in a table
+FOREIGN KEY - Uniquely identifies a row/record in another table
+CHECK - Ensures that all values in a column satisfies a specific condition
+DEFAULT - Sets a default value for a column when no value is specified
+INDEX - Used to create and retrieve data from the database very quickly
+
+
+
+
+
+CREATE TABLE Persons (
+    ID int NOT NULL,
+    LastName varchar(255) NOT NULL,
+    FirstName varchar(255),
+    Age int,
+    CONSTRAINT UC_Person UNIQUE (ID,LastName)
+);
+
+
+
+
+NOT NULL:
+============
+
+To create a NOT NULL constraint on the "Age" column when the "Persons" table is already created, use the following SQL:
+
+ALTER TABLE Persons
+MODIFY Age int NOT NULL;  
+NOte: The column should be empty
+
+
+UNIQUE:
+==========
+The UNIQUE constraint ensures that all values in a column are different.
+
+Both the UNIQUE and PRIMARY KEY constraints provide a guarantee for uniqueness for a column or set of columns.
+
+A PRIMARY KEY constraint automatically has a UNIQUE constraint.
+
+However, you can have many UNIQUE constraints per table, but only one PRIMARY KEY constraint per table.
+To create a UNIQUE constraint on the "ID" column when the table is already created, use the following SQL:
+
+ALTER TABLE Persons
+ADD UNIQUE (ID);
+
+Drop unique constraint:  
+
+ALTER TABLE Persons
+DROP CONSTRAINT UC_Person;
+
+
+PRIMARY KEY:
+==============
+CREATE TABLE Persons (
+    ID NUMBER PRIMARY KEY,  --Unique + NOT NULL
+    LastName varchar(255) NOT NULL,
+    FirstName varchar(255),
+    Age NUMBER
+);
+
+
+To create a PRIMARY KEY constraint on the "ID" column when the table is already created, use the following SQL:
+
+ALTER TABLE Persons
+ADD PRIMARY KEY (ID);
+
+on multiple cols:
+
+ALTER TABLE Persons
+ADD CONSTRAINT PK_Person PRIMARY KEY (ID,LastName);
+
+Droping:
+ALTER TABLE Persons
+DROP PRIMARY KEY;
+
+ALTER TABLE Persons
+DROP CONSTRAINT PK_Person;
+
+Foreign KEY:
+=============
+A FOREIGN KEY is a key used to link two tables together.
+
+A FOREIGN KEY is a field (or collection of fields) in one table that refers to the PRIMARY KEY in another table.
+
+The table containing the foreign key is called the child table, and the table containing the candidate key is called the referenced or parent table.
+
+CREATE TABLE Orders (
+    OrderID NUMBER NOT NULL,
+    OrderNumber NUMBER NOT NULL,
+    PersonID int,
+    FOREIGN KEY (PersonID) REFERENCES Persons(ID)
+);
+
+
+Note:   We cannot drop Parent table before droping the child table
+
+CHECK:
+==========
+The CHECK constraint is used to limit the value range that can be placed in a column.
+
+If you define a CHECK constraint on a single column it allows only certain values for this column.
+
+CREATE TABLE Persons (
+    ID NUMBER NOT NULL,
+    LastName varchar(255) NOT NULL,
+    FirstName varchar(255),
+    Age NUMBER,
+    CHECK (Age>=18)
+);
+
+CREATE TABLE Persons (
+    ID int NOT NULL,
+    LastName varchar(255) NOT NULL,
+    FirstName varchar(255),
+    Age int,
+    City varchar(255),
+    CONSTRAINT CHK_Person CHECK (Age>=18 AND City='Sandnes')
+);
+
+Alter the constraint:
+
+ALTER TABLE Persons
+ADD  CONSTRAINT CHK_Person CHECK (Age>=18 AND City='Sandnes')
+
+ALTER TABLE Persons
+DROP CONSTRAINT CHK_Person;
+
+
+DEFAULT:
+=========
+The DEFAULT constraint is used to provide a default value for a column.
+The default value will be added to all new records IF no other value is specified.
+
+CREATE TABLE Persons (
+    ID int NOT NULL,
+    LastName varchar(255) NOT NULL,
+    FirstName varchar(255),
+    Age int,
+    City varchar(255) DEFAULT 'Sandnes'
+);
+
+The DEFAULT constraint can also be used to insert system values, by using functions SYSDATE:
+
+
+CREATE TABLE Orders (
+    ID NUMBER NOT NULL,
+    OrderNumber NUMBER NOT NULL,
+    OrderDate DATE DEFAULT SYSDATE
+);
+
+/
+insert into Orders (ID,OrderNumber)values(1,212)
+/
+Select * from Orders;
+
+Alter:
+To create a DEFAULT constraint on the "City" column when the table is already created, use the following SQL:
+
+ALTER TABLE Orders
+MODIFY OrderDate DEFAULT SYSDATE;
+
+Drop:
+
+Note: we never drop default value instead we set it to NULL.
+
+ALTER TABLE constomers MODIFY age DEFAULT NULL;
+eg: ALTER TABLE Orders MODIFY OrderDate DEFAULT NULL;
+
+
+
+INDEX :
+============
+
+The CREATE INDEX statement is used to create indexes in tables.
+
+Indexes are used to retrieve data from the database more quickly than otherwise. 
+The users cannot see the indexes, they are just used to speed up searches/queries.
+
+Syntax:
+----------
+
+CREATE INDEX index_name
+ON table_name (column1, column2, ...);
+
+CREATE INDEX idx_lastname
+ON Persons (LastName);
+
+CREATE INDEX idx_pname
+ON Persons (LastName, FirstName);
+
+
+
+
+SEQUENCE:
+===========
+
+
+Sequence object is a Auto-increment allows a unique number to be generated automatically when a new record is inserted into a table.
+
+You will have to create an auto-increment field with the sequence object (this object generates a number sequence).
+
+Eg:
+
+CREATE SEQUENCE seq_person
+MINVALUE 1
+START WITH 1
+INCREMENT BY 1
+CACHE 10;
+
+The code above creates a sequence object called seq_person, that starts with 1 and will increment by 1.
+It will also cache up to 10 values for performance. 
+The cache option specifies how many sequence values will be stored in memory for faster access.
+
+
+To insert a new record into the "Persons" table, we will have to use the nextval function 
+(this function retrieves the next value from seq_person sequence):
+
+INSERT INTO Persons (Personid,FirstName,LastName)
+VALUES (seq_person.nextval,'Lars','Monsen');
+
+INSERT INTO Persons (ID,LastNAme,FirstName,Age)
+VALUES (seq_person.nextval,'Jhon','Carter',21);
+
+Select * from Persons;
+
+
+
+
+Aggregate Functions:
+========================
+
+Create Table Employee(Emp_ID NUMBER,Emp_Name Varchar2(20),Dept Varchar2(20),Salary Number);
+
+
+
+
+Avg:
+
+The following query returns the average salary of all employees.
+
+select avg(sal) “Average Salary” from emp;
+
+
+Sum:
+The following query returns the sum salary of all employees.
+
+select sum(sal) “Total Salary” from emp;
+
+MIN:
+The following query returns the max salary from the employees.
+
+select max(sal) “Max Salary” from emp;
+
+MAX:
+The following query returns the minimum salary from the employees.
+
+select min(sal) “Min Salary” from emp;
+
+COUNT:  --total no of values
+
+Returns the number of rows in the query. If you specify expr then count ignore nulls. 
+If you specify the asterisk (*), this function returns all rows, including duplicates and nulls. 
+COUNT never returns null.
+
+Select count(CITY) from Persons;
+
+
+
+
+SQL Clauses:
+-------------
+DISTINCT,GROUP BY, Having, Order BY:
+===============================
+
+DISTINCT:
+===========
+Oracle DISTINCT clause is used to remove the duplicate records from the result set.
+ It is only used with SELECT statement.
+
+CREATE TABLE  CUSTOMERS
+   (    NAME VARCHAR2(4000),   
+    AGE NUMBER,   
+    SALARY NUMBER,   
+    STATE VARCHAR2(4000)  
+   ) ;
+   
+   SELECT DISTINCT name, age, salary  
+FROM customers  
+WHERE age >= '60';  
+   
+   
+Syntax:
+
+SELECT DISTINCT expressions  
+FROM tables  
+WHERE conditions;  
+
+Eg:
+
+SELECT DISTINCT state  
+FROM customers  
+WHERE name = 'charu';  
+
+SELECT DISTINCT name, age, salary  
+FROM customers  
+WHERE age >= '60';  
+
+
+
+GroupBY:
+
+In Oracle GROUP BY clause is used with SELECT statement to collect data from 
+multiple records and group the results by one or more columns.
+
+
+   
+CREATE TABLE  SALESDEPARTMENT   
+   (    ITEM VARCHAR2(4000),   
+    SALE NUMBER,   
+    BILLING_ADDRESS VARCHAR2(4000)  
+   )  
+   
+   INSERT ALL
+  INTO SALESDEPARTMENT  VALUES ('Shoes',120,'Agra')
+  INTO SALESDEPARTMENT  VALUES ('Belts',106,'Kolkata')
+SELECT * FROM dual;
+   
+
+SELECT item, SUM(sale) AS "Total sales"  
+FROM salesdepartment  
+GROUP BY item;  
+
+
+
+   ======================================
+   
+   
+Create Table Employee(Emp_ID NUMBER,Emp_Name Varchar2(20),Dept Varchar2(20),Salary Number);
+
+   INSERT ALL
+  INTO Employee  VALUES (1,'Ram','HR',10000)
+  INTO Employee  VALUES (2,'Amit','MRKT',20000)
+   INTO Employee  VALUES (3,'Shivam','HR',30000)
+  INTO Employee  VALUES (4,'Vishwa','MRKT',30000)
+  INTO Employee  VALUES (5,'Jhon','IT',50000)
+   INTO Employee  VALUES (6,'Jhon','TRAINING',NULL)
+ 
+SELECT * FROM dual;
+
+
+/
+
+Select * from Employee;
+/
+
+Aggregate Functions:
+====================
+1.Max
+2.Min
+3.Count
+4.Avg
+5.Sum
+
+--Find max sal of emp
+
+Select Max(Salary) 
+From Employee;
+
+
+--Find Min sal of emp
+
+Select Min(Salary) 
+From Employee;
+
+--Find total no of rows
+
+Select Count(*)
+From Employee;  --6
+
+Select Count(Salary)  --won't count NULL value
+From Employee;
+
+Select DISTINCT Salary
+From Employee;
+
+Select count(DISTINCT(Salary))
+From Employee;
+
+--Find SUM sal
+
+Select SUM(Salary)
+From Employee;
+
+--To sum only unique salaries
+Select SUM(DISTINCT(Salary))
+From Employee;
+
+
+--Find Avg of Sal  
+-- avgsal means Sum of total sal / Count of Sal
+
+Select Avg(Salary)
+From Employee;
+
+
+
+SubQueries:
+=============
+
+query to display emp name with Max sal:
+
+Here we will  use nested query
+
+--Inner query will be executed first and the result will be passed to the Outer query:
+Select Emp_Name, Salary
+From Employee 
+Where Salary =(
+Select Max(Salary) 
+From Employee);
+
+--Select 2nd Highest sal and employee names who has those salaries
+Select *
+From Employee
+Where Salary =
+(
+Select MAX(Salary)
+From Employee Where Salary <>
+(Select max(Salary)
+From employee)
+);
+
+-- = operator is used wen we r comparing with one value
+-- In operator will be used wen we r comparing with mulitple values
+
+GROUP BY
+========
+--Find No of employees working in Dept
+Here we will be using Group By clause
+
+Select  DEPT,count(DEPT)
+From Employee
+Group By DEPT;  
+--the attribute which we r using with the Group BY caluse tat attribute only we need to use  in Select .
+
+
+Having :
+===========
+--Display all DEPT names where Employees are < 2
+
+--Here we cannot use Where clause becz it will work for entire table. it will indepedently work without Group By
+--So here we will use HAVING clause with GROUP BY to provide a condition it acts lika a WHERE inside GROUP BY
+
+Select  DEPT,count(DEPT)
+From Employee
+Group By DEPT
+HAVING count(DEPT) < 2;  
+
+--Now we can  write NEsted query to get Emp Name based on the abouve output
+
+ORDER BY:
+=============
+TO Order the rows in asc and desc order , Default it is ASC
+Select  DEPT,count(DEPT)
+From Employee
+Group By DEPT
+HAVING count(DEPT) < 2
+Order BY DEPT DESC;  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	  
+	   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
